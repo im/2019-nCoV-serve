@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Map from './views/Map.vue';
+import NcovMap from './views/Map.vue';
 import Broadcast from './views/Broadcast.vue';
+import Rumour from './views/Rumour.vue';
 
 Vue.use(Router)
 
@@ -12,11 +13,15 @@ export default new Router({
         {
             path: '/',
             name: 'map',
-            component: Map,
+            component: NcovMap,
         },
         {
             path: '/broadcast',
             name: 'broadcast',
             component: Broadcast
+        },{
+            path: '/rumour',
+            name: 'rumour',
+            component: Rumour
         }]
 })

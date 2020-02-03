@@ -7,29 +7,36 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         ncovData: {},
-        ncovCityData: {}
+        ncovCityData: [],
+        rumourData: {}
     },
     mutations: {
 
     },
     actions: {
-        getNcovData ({ state }) {
+        getNcovData({ state }) {
             return axios.post(`/.netlify/functions/getNcov/`).then(res => {
                 state.ncovData = res.data.newslist[0] || {}
-                console.log('state.ncovData: ', state.ncovData);
             })
-            .catch(err => {
-                return err
-            })
+                .catch(err => {
+                    return err
+                })
         },
-        getNcovCityData ({ state }) {
+        getNcovCityData({ state }) {
             return axios.post(`/.netlify/functions/getNcovCity/`).then(res => {
                 state.ncovCityData = res.data.newslist || []
-                console.log('state.getNcovCityData: ', state.ncovCityData);
             })
-            .catch(err => {
-                return err
+                .catch(err => {
+                    return err
+                })
+        },
+        getRumourData({ state }, params) {
+            return axios.post(`/.netlify/functions/getRumour/`, params).then(res => {
+                state.rumourData = res.data.newslist || []
             })
+                .catch(err => {
+                    return err
+                })
         }
     }
 })

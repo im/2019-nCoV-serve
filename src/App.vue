@@ -4,6 +4,7 @@
             <el-tabs v-model="current" tab-position="top" @tab-click="tabClick" stretch>
                 <el-tab-pane label="疫情地图" name="map"></el-tab-pane>
                 <el-tab-pane label="实时播报" name="broadcast"></el-tab-pane>
+                <el-tab-pane label="谣言" name="rumour"></el-tab-pane>
             </el-tabs>
         </div>
         <router-view />
@@ -44,7 +45,7 @@ export default class App extends Vue {
     }
 
     async created() {
-        this.current = <string>this.$route.name || 'map'
+        this.current = <string>this.$route.name
         this.getNcovData()
         this.$store.dispatch('getNcovCityData')
     }

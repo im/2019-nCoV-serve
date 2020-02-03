@@ -165,6 +165,12 @@ export default class Map extends Vue {
         this.$store
             .dispatch('getNcovData')
             .then(res => {
+                this.$message({
+                    duration: 1000,
+                    message: '更新成功',
+                    type: 'success'
+                })
+
                 this.loading = false
             })
             .catch(err => {
@@ -179,7 +185,7 @@ export default class Map extends Vue {
   align-items center
   font-size 12px
   h2
-    margin-bottom 5px
+    margin-bottom 15px
   span
     color #b6b6b6
   .el-icon-refresh
@@ -189,7 +195,7 @@ export default class Map extends Vue {
     margin-left 10px
     font-weight bold
 .sum
-    padding 10px 10px
+  padding 10px 10px
 .box
   text-align center
   border-radius 3px
@@ -207,36 +213,36 @@ export default class Map extends Vue {
     width 100%
     height 25px
     line-height 25px
-    color: #2c3e50
+    color #2c3e50
     font-weight bold
   &.danger
-    color rgb(245, 108, 108);
-    background rgba(245, 108, 108, 0.1);
+    color rgb(245, 108, 108)
+    background rgba(245, 108, 108, 0.1)
     .text
-        background rgba(245, 108, 108, 0.2);
+      background rgba(245, 108, 108, 0.2)
     .add
-        background rgba(245, 108, 108, 0.1);
+      background rgba(245, 108, 108, 0.1)
   &.warning
-    color: rgb(230, 162, 60);
-    background rgba(230, 162, 60, 0.1);
+    color rgb(230, 162, 60)
+    background rgba(230, 162, 60, 0.1)
     .text
-        background rgba(230, 162, 60, 0.2);
+      background rgba(230, 162, 60, 0.2)
     .add
-        background rgba(230, 162, 60, 0.1);
+      background rgba(230, 162, 60, 0.1)
   &.info
-    color: rgb(144, 147, 153);
-    background rgba(144, 147, 153, 0.1);
+    color rgb(144, 147, 153)
+    background rgba(144, 147, 153, 0.1)
     .text
-        background rgba(144, 147, 153, 0.2);
+      background rgba(144, 147, 153, 0.2)
     .add
-        background rgba(144, 147, 153, 0.1);
+      background rgba(144, 147, 153, 0.1)
   &.success
-    color: rgb(103, 194, 58);
-    background rgba(103, 194, 58, 0.1);
+    color rgb(103, 194, 58)
+    background rgba(103, 194, 58, 0.1)
     .text
-        background rgba(103, 194, 58, 0.2);
+      background rgba(103, 194, 58, 0.2)
     .add
-        background rgba(103, 194, 58, 0.1);
+      background rgba(103, 194, 58, 0.1)
 .map
   margin-bottom 10px
   img
