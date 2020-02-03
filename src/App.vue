@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" v-loading="loading">
         <div id="nav">
             <el-tabs v-model="current" tab-position="top" @tab-click="tabClick" stretch>
                 <el-tab-pane label="疫情地图" name="map"></el-tab-pane>
@@ -29,7 +29,7 @@ export default class App extends Vue {
 
     @Watch('$route')
     changeTab(to: any) {
-        this.current = <string>this.$route.name
+        this.current = <string>this.$route.name || 'map'
     }
     getNcovData() {
         this.$store
@@ -44,8 +44,9 @@ export default class App extends Vue {
     }
 
     async created() {
-        this.current = <string>this.$route.name
+        this.current = <string>this.$route.name || 'map'
         this.getNcovData()
+        this.$store.dispatch('getNcovCityData')
     }
 }
 </script>

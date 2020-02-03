@@ -1,5 +1,5 @@
 import axios from 'axios'
-const url = `http://api.tianapi.com/txapi/ncov/index?key=45fa3cbde8554285c1677e2ecc3168fd`
+const url = `http://api.tianapi.com/txapi/ncovcity/index?key=45fa3cbde8554285c1677e2ecc3168fd`
 exports.handler = (event, context, callback) => {
     return axios({
             url: url,

@@ -1,49 +1,50 @@
 <template>
-    <div class="map-box" v-loading="loading">
+    <div class="map-box">
         <div class="update-date">
-            <span>截止 {{modifyTime}} ({{duration}}) 全国数据统计</span>
+            <h2>全国疫情状态</h2>
+            <span>截止 {{modifyTime}} ({{duration}})</span>
             <i class="el-icon-refresh" @click="updateData"></i>
         </div>
-        <div class="info">
-            <el-row :gutter="20">
-                <el-col :span="6">
-                    <div class="box danger">
-                        <div class="add">+{{desc.confirmedIncr}}</div>
-                        <div class="num">{{desc.confirmedCount}}</div>
-                        <div class="text">确诊</div>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="box warning">
-                        <div class="add">+{{desc.suspectedIncr}}</div>
-                        <div class="num">{{desc.suspectedCount}}</div>
-                        <div class="text">疑似</div>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="box info">
-                        <div class="add">+{{desc.deadIncr}}</div>
-                        <div class="num">{{desc.deadCount}}</div>
-                        <div class="text">死亡</div>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="box success">
-                        <div class="add">+{{desc.curedIncr}}</div>
-                        <div class="num">{{desc.curedCount}}</div>
-                        <div class="text">治愈</div>
-                    </div>
-                </el-col>
-            </el-row>
-        </div>
+        <div>
+            <div class="sum">
+                <el-row :gutter="20">
+                    <el-col :span="6">
+                        <div class="box danger">
+                            <div class="add">+{{desc.confirmedIncr}}</div>
+                            <div class="num">{{desc.confirmedCount}}</div>
+                            <div class="text">确诊</div>
+                        </div>
+                    </el-col>
+                    <el-col :span="6">
+                        <div class="box warning">
+                            <div class="add">+{{desc.suspectedIncr}}</div>
+                            <div class="num">{{desc.suspectedCount}}</div>
+                            <div class="text">疑似</div>
+                        </div>
+                    </el-col>
+                    <el-col :span="6">
+                        <div class="box info">
+                            <div class="add">+{{desc.deadIncr}}</div>
+                            <div class="num">{{desc.deadCount}}</div>
+                            <div class="text">死亡</div>
+                        </div>
+                    </el-col>
+                    <el-col :span="6">
+                        <div class="box success">
+                            <div class="add">+{{desc.curedIncr}}</div>
+                            <div class="num">{{desc.curedCount}}</div>
+                            <div class="text">治愈</div>
+                        </div>
+                    </el-col>
+                </el-row>
+            </div>
 
-        <div class="map">
-            <img :src="desc.imgUrl" />
-            <img :src="desc.dailyPic" />
-        </div>
+            <div class="map">
+                <img :src="desc.imgUrl" />
+            </div>
 
-        <CityList></CityList>
-        <!-- {{ncovData}} -->
+            <CityList></CityList>
+        </div>
     </div>
 </template>
 <script lang="ts">
@@ -159,6 +160,8 @@ export default class Map extends Vue {
     }
 
     updateData() {
+        if (this.loading) return
+        this.loading = true
         this.$store
             .dispatch('getNcovData')
             .then(res => {
@@ -172,36 +175,70 @@ export default class Map extends Vue {
 </script>
 <style lang="stylus" scoped>
 .update-date
-    padding 8px
-    display flex
-    align-items center
-    font-size 12px
+  padding 20px 8px 10px 8px
+  align-items center
+  font-size 12px
+  h2
+    margin-bottom 5px
+  span
+    color #b6b6b6
   .el-icon-refresh
     color #1989fa
     cursor pointer
     transition All 0.4s ease-in-out
     margin-left 10px
     font-weight bold
+.sum
+    padding 10px 10px
 .box
   text-align center
-  padding 10px
+  border-radius 3px
+  overflow hidden
   .add
     font-size 12px
+    line-height 18px
   .num
     text-align center
     font-size 18px
     font-weight bold
+    line-height 30px
   .text
     font-size 12px
+    width 100%
+    height 25px
+    line-height 25px
+    color: #2c3e50
+    font-weight bold
   &.danger
-    color #F56C6C
+    color rgb(245, 108, 108);
+    background rgba(245, 108, 108, 0.1);
+    .text
+        background rgba(245, 108, 108, 0.2);
+    .add
+        background rgba(245, 108, 108, 0.1);
   &.warning
-    color #E6A23C
+    color: rgb(230, 162, 60);
+    background rgba(230, 162, 60, 0.1);
+    .text
+        background rgba(230, 162, 60, 0.2);
+    .add
+        background rgba(230, 162, 60, 0.1);
   &.info
-    color #909399
+    color: rgb(144, 147, 153);
+    background rgba(144, 147, 153, 0.1);
+    .text
+        background rgba(144, 147, 153, 0.2);
+    .add
+        background rgba(144, 147, 153, 0.1);
   &.success
-    color #67C23A
+    color: rgb(103, 194, 58);
+    background rgba(103, 194, 58, 0.1);
+    .text
+        background rgba(103, 194, 58, 0.2);
+    .add
+        background rgba(103, 194, 58, 0.1);
 .map
+  margin-bottom 10px
   img
     width 100%
 </style>

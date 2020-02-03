@@ -7,12 +7,27 @@
             <li class="success">治愈</li>
         </ul>
         <ul class="list">
-            <li v-for="item in caseData" :key="item.id">
+            <li v-for="item in ncovCityData" :key="item.locationId">
                 <ul class="item">
-                    <li class="city">{{item.provinceShortName}}</li>
+                    <li class="city">
+                        <i class="icon" v-if="item.cities.length" :class="iconClass(item)" @click="show(item)"></i>
+                        {{item.provinceShortName}}
+                    </li>
                     <li class="danger">{{item.confirmedCount}}</li>
                     <li class="info">{{item.deadCount}}</li>
                     <li class="success">{{item.curedCount}}</li>
+                </ul>
+                <ul class="sub-list" v-if="item.show" v-for="(cityItem, index) in item.cities" :key="cityItem.cityName + index">
+                    <li>
+                        <ul class="item">
+                            <li class="city">
+                                {{cityItem.cityName}}
+                            </li>
+                            <li class="danger">{{cityItem.confirmedCount}}</li>
+                            <li class="info">{{cityItem.deadCount}}</li>
+                            <li class="success">{{cityItem.curedCount}}</li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
         </ul>
@@ -25,12 +40,18 @@ import { Component, Vue } from 'vue-property-decorator'
     components: {}
 })
 export default class CityList extends Vue {
-    get ncovData() {
-        return this.$store.state.ncovData || {}
+    get ncovCityData() {
+        return this.$store.state.ncovCityData || []
     }
-
-    get caseData() {
-        return (this.ncovData.case || []).reverse()
+    show (item:any) {
+        if (item.show) {
+            item.show = false
+        } else {
+            this.$set(item, 'show', true)
+        }
+    }
+    iconClass (item:any) {
+        return item.show ? 'el-icon-caret-bottom' : 'el-icon-caret-right'
     }
 }
 </script>
@@ -48,25 +69,30 @@ export default class CityList extends Vue {
       background #e7e6f6
       width 35%
     &.danger
-      background #F56C6C
+      background rgba(245, 108, 108, 0.2);
       width 21%
     &.info
-      background #909399
+      background rgba(144, 147, 153, 0.2);
       width 22%
     &.success
-      background #67C23A
+      background rgba(103, 194, 58, 0.2);
       width 22%
 .list
   & > li
-    text-align center
-    height 40px
-    line-height 40px
+    background #fafafa
   .item
     display flex
     li
       text-align center
       height 40px
       line-height 40px
+      position relative
+      .icon
+          position absolute
+          height 40px
+          line-height 40px
+          left 10px
+          top 0
       &.city
         width 35%
       &.danger
@@ -75,4 +101,6 @@ export default class CityList extends Vue {
         width 22%
       &.success
         width 22%
+.sub-list
+    background #fff
 </style>
