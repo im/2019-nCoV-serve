@@ -50,6 +50,7 @@ export default class Broadcast extends Vue {
 <style lang="stylus" scoped>
 .broadcast
     padding 8px
+    padding-top 20px
     /deep/
         .el-card__body
             padding 10px

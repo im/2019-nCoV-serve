@@ -12,11 +12,10 @@ exports.handler = (event, context, callback) => {
                 statusCode: 200,
                 body: JSON.stringify(res.data)
             })
-        })
-        .catch(err => {
+        }).catch(err => {
             return callback(null, {
                 statusCode: 500,
-                body: err
+                body: JSON.stringify(err)
             })
         })
 }
