@@ -1,18 +1,10 @@
 <template>
     <div id="app">
         <div id="nav">
-            <a-menu v-model="current" mode="horizontal">
-                <a-menu-item key="home">
-                    <router-link to="/">
-                        <a-icon type="home" />首页
-                    </router-link>
-                </a-menu-item>
-                <a-menu-item key="add">
-                    <router-link to="/add">
-                        <a-icon type="user-add" />添加
-                    </router-link>
-                </a-menu-item>
-            </a-menu>
+            <el-tabs v-model="current" tab-position="top" @tab-click="tabClick" stretch>
+                <el-tab-pane label="疫情地图" name="map"></el-tab-pane>
+                <el-tab-pane label="实时播报" name="broadcast"></el-tab-pane>
+            </el-tabs>
         </div>
         <router-view />
     </div>
@@ -27,29 +19,44 @@ declare module 'vue/types/vue' {
 }
 @Component({})
 export default class App extends Vue {
-    res: String = ''
-    current:Array<String> = ['home']
+    current: String = 'map'
+    loading: Boolean = true
+    err: Boolean = false
 
+    tabClick(tab: any) {
+        this.$router.push({ name: tab.name })
+    }
 
     @Watch('$route')
-    changeTab (to:any) {
-       this.current = [to.name]
+    changeTab(to: any) {
+        this.current = <string>this.$route.name
+    }
+    getNcovData() {
+        this.$store
+            .dispatch('getNcovData')
+            .then(res => {
+                this.loading = false
+            })
+            .catch(err => {
+                this.loading = false
+                this.err = true
+            })
     }
 
     async created() {
-        this.current = [<String>this.$route.name]
-        // const res = await axios.post(`/.netlify/functions/helloworld/`)
-        // this.res = JSON.stringify(res)
-
+        this.current = <string>this.$route.name
+        this.getNcovData()
     }
 }
 </script>
+<style src="../style/app.styl" lang="stylus"></style>
 <style lang="stylus" >
 html, body
-    width 100%
-    height 100%
-#nav
-    margin-bottom 10px
-    .ant-menu-horizontal
-        text-align center
+  width 100%
+  height 100%
+  margin 0
+  padding 0
+  .el-tabs
+    .el-tabs__header
+      margin 0
 </style>

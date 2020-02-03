@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue';
-import Add from './views/Add.vue';
-import PostPage from './views/PostPage.vue';
+import Map from './views/Map.vue';
+import Broadcast from './views/Broadcast.vue';
 
 Vue.use(Router)
 
@@ -12,17 +11,12 @@ export default new Router({
     routes: [
         {
             path: '/',
-            name: 'home',
-            component: Home,
+            name: 'map',
+            component: Map,
         },
         {
-            path: '/add',
-            name: 'add',
-            component: Add
-        },
-        {
-            path: '/post/:id',
-            name: 'post',
-            component: PostPage
+            path: '/broadcast',
+            name: 'broadcast',
+            component: Broadcast
         }]
 })

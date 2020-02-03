@@ -1,14 +1,17 @@
 <template>
-    <div class="PostPage">
-       PostPage
+    <div class="home">
+        Broadcast
     </div>
 </template>
 <script lang="ts">
 import axios from 'axios'
 import { Component, Vue } from 'vue-property-decorator'
-@Component({})
-export default class PostPage extends Vue {
-    
+@Component({
+    name: 'Broadcast',
+    components: {
+    }
+})
+export default class Broadcast extends Vue {
 }
 </script>
 <style lang="stylus" scoped>
