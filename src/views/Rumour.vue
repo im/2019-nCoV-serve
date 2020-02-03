@@ -1,15 +1,20 @@
 <template>
-    <div class="rumour-box">
+    <div class="rumour-box" v-loading="loading">
         <el-timeline>
-            <el-timeline-item v-for="item in rumourData" size="large" :timestamp="item.explain" :key="item.id" :color="getColor(item)"  placement="top">
+            <el-timeline-item
+                v-for="item in rumourData"
+                size="large"
+                :timestamp="item.explain"
+                :key="item.id"
+                :color="getColor(item)"
+                placement="top"
+            >
                 <el-card>
                     <div class="box">
                         <div>
                             <img :src="item.imgsrc" />
                         </div>
-                        <div class="content">
-                            {{item.summary}}
-                        </div>
+                        <div class="content">{{item.summary}}</div>
                         <div class="title">{{item.title}}</div>
                         <div class="desc">{{item.desc}}</div>
                     </div>
@@ -28,7 +33,7 @@
                                 信息来源：{{item.infoSource}}
                             </span>
                         </div>
-                    </div> -->
+                    </div>-->
                 </el-card>
             </el-timeline-item>
         </el-timeline>
@@ -39,7 +44,7 @@
                 </div>
                 <div class="title">{{item.title}}</div>
                 <div class="desc">{{item.desc}}</div>
-            </div> -->
+            </div>-->
         </div>
     </div>
 </template>
@@ -50,14 +55,22 @@ import { Component, Vue } from 'vue-property-decorator'
     components: {}
 })
 export default class Rumour extends Vue {
+    loading: Boolean = true
     get rumourData() {
         return this.$store.state.rumourData || []
     }
     getRumourData() {
-        this.$store.dispatch('getRumourData', {
-            page: 1,
-            num: 20
-        })
+        this.$store
+            .dispatch('getRumourData', {
+                page: 1,
+                num: 20
+            })
+            .then((res: any) => {
+                this.loading = false
+            })
+            .catch(err => {
+                this.loading = false
+            })
     }
     boxClass(item: any) {
         return {
@@ -66,7 +79,7 @@ export default class Rumour extends Vue {
             success: item.explain === '确有此事'
         }
     }
-    getColor (item: any) {
+    getColor(item: any) {
         let color = ''
         if (item.explain === '尚无定论') {
             color = 'rgba(230, 162, 60, 0.8)'
@@ -89,7 +102,7 @@ export default class Rumour extends Vue {
   padding 25px 8px
   /deep/
     .el-card__body
-        padding 0
+      padding 0
 .box
   position relative
   overflow hidden

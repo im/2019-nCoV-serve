@@ -1,9 +1,9 @@
 import axios from 'axios'
-const url = `http://api.tianapi.com/txapi/rumour/index?key=45fa3cbde8554285c1677e2ecc3168fd`
+import * as http from './http.js'
 exports.handler = (event, context, callback) => {
     const body = JSON.parse(event.body) || {}
     return axios({
-            url: url,
+            url: http.rumourUrl,
             method: 'get',
             params: body,
             headers: {

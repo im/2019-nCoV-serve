@@ -11,7 +11,7 @@
                     <el-col :span="6">
                         <div class="box danger">
                             <div class="add" v-if="desc.confirmedIncr">+{{desc.confirmedIncr}}</div>
-                            <div class="num" >{{desc.confirmedCount}}</div>
+                            <div class="num">{{desc.confirmedCount}}</div>
                             <div class="text">确诊</div>
                         </div>
                     </el-col>
@@ -40,8 +40,7 @@
             </div>
 
             <div class="map">
-                <!-- <img :src="desc.imgUrl" /> -->
-                <Chart @chartClick="chartClick" @click="clickA"></Chart>
+                <Chart @chartClick="chartClick"></Chart>
             </div>
 
             <CityList></CityList>
@@ -62,8 +61,8 @@ import { Component, Vue } from 'vue-property-decorator'
 })
 export default class Map extends Vue {
     loading: Boolean = false
-    cityName:String = '全国'
-    
+    cityName: String = '全国'
+
     get ncovData() {
         return this.$store.state.ncovData || {}
     }
@@ -96,13 +95,8 @@ export default class Map extends Vue {
         const date3 = date2.diff(date1, 'minute')
         return moment.duration(date3, 'minutes').humanize(true) || ''
     }
-    
-    clickA (pa:any) {
-        console.log('pa: ', pa);
 
-    }
-
-    chartClick (city:any) {
+    chartClick(city: any) {
         this.cityName = city
     }
 
@@ -112,11 +106,6 @@ export default class Map extends Vue {
         this.$store
             .dispatch('getNcovData')
             .then(res => {
-                // this.$message({
-                //     duration: 1000,
-                //     message: '更新成功',
-                //     type: 'success'
-                // })
                 this.loading = false
             })
             .catch(err => {

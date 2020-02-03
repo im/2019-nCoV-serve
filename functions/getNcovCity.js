@@ -1,8 +1,8 @@
 import axios from 'axios'
-const url = `http://api.tianapi.com/txapi/ncovcity/index?key=45fa3cbde8554285c1677e2ecc3168fd`
+import * as http from './http.js'
 exports.handler = (event, context, callback) => {
     return axios({
-            url: url,
+            url: http.ncovCityUrl,
             method: 'get',
             headers: {
                 'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
