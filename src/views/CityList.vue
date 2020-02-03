@@ -10,25 +10,34 @@
             <li v-for="item in ncovCityData" :key="item.locationId">
                 <ul class="item">
                     <li class="city">
-                        <i class="icon" v-if="item.cities.length" :class="iconClass(item)" @click="show(item)"></i>
+                        <i
+                            class="icon"
+                            v-if="item.cities.length"
+                            :class="iconClass(item)"
+                            @click="show(item)"
+                        ></i>
                         {{item.provinceShortName}}
                     </li>
                     <li class="danger">{{item.confirmedCount}}</li>
                     <li class="info">{{item.deadCount}}</li>
                     <li class="success">{{item.curedCount}}</li>
                 </ul>
-                <ul class="sub-list" v-if="item.show" v-for="(cityItem, index) in item.cities" :key="cityItem.cityName + index">
-                    <li>
-                        <ul class="item">
-                            <li class="city">
-                                {{cityItem.cityName}}
-                            </li>
-                            <li class="danger">{{cityItem.confirmedCount}}</li>
-                            <li class="info">{{cityItem.deadCount}}</li>
-                            <li class="success">{{cityItem.curedCount}}</li>
-                        </ul>
-                    </li>
-                </ul>
+                <template v-if="item.show">
+                    <ul
+                        class="sub-list"
+                        v-for="(cityItem, index) in item.cities"
+                        :key="cityItem.cityName + index"
+                    >
+                        <li>
+                            <ul class="item">
+                                <li class="city">{{cityItem.cityName}}</li>
+                                <li class="danger">{{cityItem.confirmedCount}}</li>
+                                <li class="info">{{cityItem.deadCount}}</li>
+                                <li class="success">{{cityItem.curedCount}}</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </template>
             </li>
         </ul>
     </div>
@@ -43,14 +52,14 @@ export default class CityList extends Vue {
     get ncovCityData() {
         return this.$store.state.ncovCityData || []
     }
-    show (item:any) {
+    show(item: any) {
         if (item.show) {
             item.show = false
         } else {
             this.$set(item, 'show', true)
         }
     }
-    iconClass (item:any) {
+    iconClass(item: any) {
         return item.show ? 'el-icon-caret-bottom' : 'el-icon-caret-right'
     }
 }
@@ -58,6 +67,7 @@ export default class CityList extends Vue {
 <style lang="stylus" scoped>
 .city-list
   width 100%
+  min-height 300px
 .header
   display flex
   width 100%
@@ -69,13 +79,13 @@ export default class CityList extends Vue {
       background #e7e6f6
       width 35%
     &.danger
-      background rgba(245, 108, 108, 0.2);
+      background rgba(245, 108, 108, 0.2)
       width 21%
     &.info
-      background rgba(144, 147, 153, 0.2);
+      background rgba(144, 147, 153, 0.2)
       width 22%
     &.success
-      background rgba(103, 194, 58, 0.2);
+      background rgba(103, 194, 58, 0.2)
       width 22%
 .list
   & > li
@@ -88,11 +98,11 @@ export default class CityList extends Vue {
       line-height 40px
       position relative
       .icon
-          position absolute
-          height 40px
-          line-height 40px
-          left 10px
-          top 0
+        position absolute
+        height 40px
+        line-height 40px
+        left 10px
+        top 0
       &.city
         width 35%
       &.danger
@@ -102,5 +112,5 @@ export default class CityList extends Vue {
       &.success
         width 22%
 .sub-list
-    background #fff
+  background #fff
 </style>
