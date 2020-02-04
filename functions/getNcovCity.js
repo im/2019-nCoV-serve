@@ -1,21 +1,21 @@
 import axios from 'axios'
 import * as http from './http.js'
-exports.handler = (event, context, callback) => {
+exports.handler = async (event, context, callback) => {
     return axios({
-            url: http.ncovCityUrl,
-            method: 'get',
+        url: http.ncovCityUrl,
+        method: 'get'
+    }).then(res => {
+        return {
+            statusCode: 200,
             headers: {
-                'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
-            }
-        }).then(res => {
-            return callback(null, {
-                statusCode: 200,
-                body: JSON.stringify(res.data)
-            })
-        }).catch(err => {
-            return callback(null, {
-                statusCode: 500,
-                body: JSON.stringify(err)
-            })
-        })
+                "Content-Type": "text/html; charset=UTF-8"
+            },
+            body: JSON.stringify(res.data)
+        }
+    }).catch(err => {
+        return {
+            statusCode: 500,
+            body: JSON.stringify(err)
+        }
+    })
 }

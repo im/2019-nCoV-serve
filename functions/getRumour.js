@@ -1,24 +1,24 @@
 import axios from 'axios'
 import * as http from './http.js'
-exports.handler = (event, context, callback) => {
+exports.handler = async (event, context, callback) => {
     const body = JSON.parse(event.body) || {}
     return axios({
             url: http.rumourUrl,
             method: 'get',
-            params: body,
-            headers: {
-                'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
-            }
+            params: body
         }).then(res => {
-            return callback(null, {
+            return {
                 statusCode: 200,
+                headers: {
+                    "Content-Type": "text/html; charset=UTF-8"
+                },
                 body: JSON.stringify(res.data)
-            })
+            }
         })
         .catch(err => {
-            return callback(null, {
+            return {
                 statusCode: 500,
                 body: JSON.stringify(err)
-            })
+            }
         })
 }
