@@ -93,7 +93,7 @@ export default class Map extends Vue {
         const date1 = moment(new Date(), 'hh:mm')
         const date2 = moment(new Date(this.ncovData.desc.modifyTime), 'hh:mm')
         const date3 = date2.diff(date1, 'minute')
-        return moment.duration(date3, 'minutes').humanize(true) || ''
+        return moment.duration(date3, 'minutes').locale('zh-cn').humanize(true) || ''
     }
 
     chartClick(city: any) {
