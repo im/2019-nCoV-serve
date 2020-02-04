@@ -54,11 +54,11 @@ export default class App extends Vue {
 <style src="../style/app.styl" lang="stylus"></style>
 <style lang="stylus" >
 html, body
-  width 100%
-  height 100%
-  margin 0
-  padding 0
-  .el-tabs
-    .el-tabs__header
-      margin 0
+    width 100%
+    height 100%
+    margin 0
+    padding 0
+    .el-tabs
+        .el-tabs__header
+            margin 0
 </style>

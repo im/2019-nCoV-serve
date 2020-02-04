@@ -3,7 +3,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import * as City from './City'
+import { getNameByPinyin, getPinyinByName } from './City.js'
 const echarts = require('echarts')
 @Component({
     name: 'Chart',
@@ -28,7 +28,7 @@ export default class Chart extends Vue {
     }
 
     get cityName() {
-        return City.getNameByPinyin(this.province)
+        return getNameByPinyin(this.province)
     }
 
     handleClick(params: any) {
@@ -36,7 +36,7 @@ export default class Chart extends Vue {
     }
 
     getCitiesChartData() {
-        const cityName = City.getNameByPinyin(this.province)
+        const cityName = getNameByPinyin(this.province)
         const cityData = this.ncovCityData.filter(
             (v: any) => v.provinceShortName === cityName
         )[0]
@@ -123,7 +123,7 @@ export default class Chart extends Vue {
 
         this.chart.on('click', function(params: any) {
             if (params.name) {
-                self.province = City.getPinyinByName(params.name) || 'china'
+                self.province = getPinyinByName(params.name) || 'china'
                 self.destroy()
                 self.init()
                 const cityName =
